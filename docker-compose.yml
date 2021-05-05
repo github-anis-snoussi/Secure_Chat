@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  
+  web:
+    container_name: gl4-web
+    build: ./flask
+    ports:
+      - 5000:5000
+    networks:
+      - net
+    depends_on:
+      - redis
+    env_file:
+      - ./flask/.env
+
+  redis:
+    container_name: gl4-session
+    image: redis:alpine
+    networks:
+      - net
+
+networks:
+  net:
