@@ -50,7 +50,7 @@ export class Dashboard extends Component {
     }
 
     componentDidMount() {
-        document.title = "Dashboard - My Project";
+        document.title = "Dashboard - Secure Chat";
     }
 
 }

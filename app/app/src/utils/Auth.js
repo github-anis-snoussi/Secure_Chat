@@ -159,11 +159,30 @@ export class Auth {
     /**
      * Returns the API response for LDAP authentication
      */
-    requestLDAPLogin = (username, password) => {
+     requestLDAPLogin = (username, password) => {
         return fetch(this.api_endpoint + "/auth/ldap/login", {
             method: "POST",
             headers: { 'Content-Type': "application/json" },
             body: JSON.stringify({
+                "username": username,
+                "password": password
+            })
+        })
+        .then(res => res.json())
+        .then((data) => { return data })
+        .catch(console.error)
+    }
+
+    /**
+     * Returns the API response for LDAP authentication
+     */
+     requestLDAPRegister = (firstname, lastname, username, password) => {
+        return fetch(this.api_endpoint + "/auth/ldap/register", {
+            method: "POST",
+            headers: { 'Content-Type': "application/json" },
+            body: JSON.stringify({
+                "firstname": firstname,
+                "lastname": lastname,
                 "username": username,
                 "password": password
             })

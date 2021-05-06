@@ -130,7 +130,7 @@ export class Profile extends Component {
     }
 
     componentDidMount() {
-        document.title = "Profile - My Project";
+        document.title = "Profile - Secure Chat";
     }
 
 }

@@ -7,6 +7,7 @@ import { Auth } from './utils/Auth'
 import { Layout } from './Layout'
 import Home from './Home'
 import { Login } from './Login'
+import { Register } from './Register'
 import { Dashboard } from './Dashboard'
 import { Profile } from './Profile'
 import { About } from './About'
@@ -65,6 +66,7 @@ export class App extends Component {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/login" render={ (props) => <Login {...props} authenticated={this.state.authenticated} onAuthUpdate={this.onAuthUpdate} /> } />
+                            <Route path="/signup" render={ (props) => <Register {...props} authenticated={this.state.authenticated} onAuthUpdate={this.onAuthUpdate} /> } />
                             <Route path="/dashboard" render={ (props) => <Dashboard {...props} authenticated={this.state.authenticated} /> } />
                             <Route path="/profile" render={ (props) => <Profile {...props} authenticated={this.state.authenticated} /> } />
                             <Route path="/about" component={About} />

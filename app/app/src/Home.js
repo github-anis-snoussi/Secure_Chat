@@ -27,12 +27,15 @@ class Home extends Component {
                             <Jumbotron>
                                 <h1>Hello</h1>
                                 <p>
-                                    You are on the homepage of your project.
+                                    Welcome to the most secure Chat app in the world!
                                 </p>
                                 <p>
-                                    <Nav.Link as={Link} to={'/login'}>
-                                        <Button variant="warning">Login !</Button>
-                                    </Nav.Link>
+                                <Nav.Link as={Link} to={'/login'}>
+                                    <Button variant="warning">Login !</Button>
+                                </Nav.Link>
+                                <Nav.Link as={Link} to={'/signup'}>
+                                    <Button variant="warning">Register !</Button>
+                                </Nav.Link>
                                 </p>
                             </Jumbotron>
                         </Col>
@@ -43,7 +46,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        document.title = "Home - My Project";
+        document.title = "Home - Secure Chat";
     }
 
 }

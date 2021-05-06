@@ -27,17 +27,19 @@ const Styles = styled.div`
     }
 `
 
-export class Login extends Component {
+export class Register extends Component {
 
     constructor(props) {
         super(props);
         // Passing a list of callbacks to update the
-        // parent component <App/> and <Login>'s component.
+        // parent component <App/> and <Register>'s component.
         this.auth = new Auth([
             this.props.onAuthUpdate,
             this.onAuthUpdate
         ])
         this.state = {
+            "firstname": "",
+            "lastname": "",
             "username": "",
             "password": "",
             "disable_form": false,
@@ -52,18 +54,23 @@ export class Login extends Component {
         })
     }
 
+    onFirstNameChange = (event) => this.setState({ "firstname": event.target.value })
+    onLastNameChange = (event) => this.setState({ "lastname": event.target.value })
     onUsernameChange = (event) => this.setState({ "username": event.target.value })
-    
     onPasswordChange = (event) => this.setState({ "password": event.target.value })
 
     onFormSubmitted = async (event) => {
-        if (this.state.username.length && this.state.password.length) {
+        if (this.state.firstname.length && this.state.lastname.length && this.state.username.length && this.state.password.length) {
             this.setState({ "disable_form": true })
             const api_ping_query = await Ping.pingApi()
             if (api_ping_query) {
-                const api_auth_query = await this.auth.requestLDAPLogin(this.state.username, this.state.password)
+                const api_auth_query = await this.auth.requestLDAPRegister(this.state.firstname, this.state.lastname, this.state.username, this.state.password)
                 if (api_auth_query && api_auth_query.error === false) {
-                    this.auth.registerUserAuthentication(api_auth_query)
+                    Notifier.createNotification(
+                        "success", 
+                        "Account Created", 
+                        "You can start using the app"
+                    )
                 } else {
                     Notifier.notifyFromResponse(api_auth_query, "Authentication")
                 }
@@ -89,9 +96,9 @@ export class Login extends Component {
                             <Card>
                                 <Card.Body>
                                     <Jumbotron>
-                                        <h1>Login</h1>
+                                        <h1>Register</h1>
                                         <p>
-                                            Login to the application with your LDAP credentials to access your dashboard.
+                                            Register to start using the application.
                                         </p>
                                     </Jumbotron>
                                     {
@@ -99,6 +106,24 @@ export class Login extends Component {
                                         ?
                                         (
                                             <Form>
+                                                <Form.Group>
+                                                    <Form.Label>First Name</Form.Label>
+                                                    <Form.Control 
+                                                        type="text" 
+                                                        placeholder="First Name"
+                                                        disabled={this.state.disable_form}
+                                                        onChange={this.onFirstNameChange}
+                                                    />
+                                                </Form.Group>
+                                                <Form.Group>
+                                                    <Form.Label>Last Name</Form.Label>
+                                                    <Form.Control 
+                                                        type="text" 
+                                                        placeholder="Last Name"
+                                                        disabled={this.state.disable_form}
+                                                        onChange={this.onLastNameChange}
+                                                    />
+                                                </Form.Group>
                                                 <Form.Group>
                                                     <Form.Label>Username</Form.Label>
                                                     <Form.Control 
@@ -134,7 +159,7 @@ export class Login extends Component {
                                                             width={28}
                                                         />
                                                         :
-                                                        <>Login</>
+                                                        <>Register</>
                                                     }
                                                 </Button>
                                             </Form>
@@ -165,7 +190,7 @@ export class Login extends Component {
     }
 
     componentDidMount() {
-        document.title = "Login - Secure Chat";
+        document.title = "Register - Secure Chat";
     }
 
 }

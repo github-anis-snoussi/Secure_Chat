@@ -15,7 +15,7 @@ export class About extends Component {
     }
 
     componentDidMount() {
-        document.title = "About - My Project";
+        document.title = "About - Secure Chat";
     }
 
 }
