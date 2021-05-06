@@ -23,6 +23,24 @@ auth_login_ldap_response_dto = api.model('auth_login_ldap_response', {
     )
 })
 
+auth_register_ldap_dto = api.model('auth_register_ldap', {
+    'firstname': fields.String(required=True, description='LDAP user First Name'),
+    'lastname': fields.String(required=True, description='LDAP user Last Name'),
+    'username': fields.String(required=True, description='LDAP uid'),
+    'password': fields.String(required=True, description='LDAP password')
+})
+
+auth_register_ldap_response_dto = api.model('auth_register_ldap_response', {
+    'error': fields.Boolean(description="True on error, false on success"),
+    'message': fields.String(description="Some error or success message"),
+    'details': fields.Nested(
+        api.model('auth_register_ldap_response_details', {
+            'token': fields.String,
+            'expires_at': fields.Integer(description="As unix timestamp in seconds")
+        }), skip_none=True
+    )
+})
+
 auth_header_token_dto = api.parser()
 auth_header_token_dto.add_argument(
     'X-Api-Auth-Token', 
@@ -43,6 +61,23 @@ class AuthLDAPLogin(Resource):
     @api.expect(auth_login_ldap_dto, validate=True)
     def post(self):
         return AuthService.authLDAPUser(
+            escape(request.json["username"]),
+            escape(request.json["password"])
+        ).getResponse()
+
+
+@api.route(
+    '/ldap/register',
+    doc={"description": "Register a new LDAP User."}
+)
+class AuthLDAPRegister(Resource):
+
+    @api.marshal_with(auth_register_ldap_response_dto, skip_none=True)
+    @api.expect(auth_register_ldap_dto, validate=True)
+    def post(self):
+        return AuthService.registerLDAPUser(
+            escape(request.json["firstname"]),
+            escape(request.json["lastname"]),
             escape(request.json["username"]),
             escape(request.json["password"])
         ).getResponse()

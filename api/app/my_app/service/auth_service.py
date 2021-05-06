@@ -1,5 +1,6 @@
 import os
 import ldap
+import ldap.modlist as modlist
 import time
 import datetime
 
@@ -88,6 +89,51 @@ class AuthService():
         else:
             response.setMessage("Invalid username or password")
         return response
+
+
+    @staticmethod
+    def registerLDAPUser(firstname: str, lastname: str, username: str, password: str):
+        response = ApiResponse()
+
+        try:
+            # Open a connection
+            ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+            connection = ldap.initialize(LDAP_ENDPOINT)
+            connection.protocol_version = ldap.VERSION3
+            
+            # Bind/authenticate with a user with apropriate rights to add objects
+            connection.simple_bind_s(LDAP_ADMIN_DN, LDAP_ADMIN_PASSWORD)
+    
+            # The dn of our new entry/object
+            fullname = firstname + " " + lastname
+            dn="cn=" + fullname + ",dc=example,dc=com" 
+            
+            # A dict to help build the "body" of the object
+            attrs = {}
+            attrs['objectclass'] = [ 'top', 'posixAccount', 'inetOrgPerson']
+            attrs['uid'] = username
+            attrs['cn'] = fullname
+            attrs['givenname'] = firstname
+            attrs['sn'] = lastname
+            attrs['gidNumber'] = '500'
+            attrs['userPassword'] = password
+            attrs['homeDirectory'] = "/home/users/" + username
+            
+            # Convert our dict to nice syntax for the add-function using modlist-module
+            ldif = modlist.addModlist(attrs)
+            
+            # Do the actual synchronous add-operation to the ldapserver
+            connection.add_s(dn,ldif)
+            
+            # Disconnect and free resources when done
+            connection.unbind_s()
+            response.setMessage("User created")
+        except ldap.LDAPError as e:
+            logger.debug("[AuthService.registerLDAPUser] Can't add LDAP user " + username)
+            logger.debug(e)
+            response.setMessage("Invalid inputs")
+        return response
+
 
     @staticmethod
     def checkLDAPCredentials(username: str, password: str):
