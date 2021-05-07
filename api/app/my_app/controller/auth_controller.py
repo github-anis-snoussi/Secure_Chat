@@ -32,13 +32,7 @@ auth_register_ldap_dto = api.model('auth_register_ldap', {
 
 auth_register_ldap_response_dto = api.model('auth_register_ldap_response', {
     'error': fields.Boolean(description="True on error, false on success"),
-    'message': fields.String(description="Some error or success message"),
-    'details': fields.Nested(
-        api.model('auth_register_ldap_response_details', {
-            'token': fields.String,
-            'expires_at': fields.Integer(description="As unix timestamp in seconds")
-        }), skip_none=True
-    )
+    'message': fields.String(description="Some error or success message")
 })
 
 auth_header_token_dto = api.parser()
