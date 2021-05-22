@@ -1,6 +1,9 @@
 # GL4_Secure_Chat
 Projet Protocoles de sécurité GL4
 
+## Overview
+
+![Architecture Description](./overview.drawio.svg)
 
 ## How to start
 I have tried sooo many variations that I have conflicts when starting docker containers, that's why I need to delete the containers and volumes each time :

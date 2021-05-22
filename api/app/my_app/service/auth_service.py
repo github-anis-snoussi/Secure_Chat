@@ -3,6 +3,7 @@ import ldap
 import ldap.modlist as modlist
 import time
 import datetime
+import math
 
 from flask import request, escape
 from functools import wraps
@@ -96,6 +97,7 @@ class AuthService():
         response = ApiResponse()
 
         try:
+            logger.debug("[AuthService.registerLDAPUser] will register user: " + firstname + ":"  + lastname + ":"  + username + ":"  + password )
             # Open a connection
             ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
             connection = ldap.initialize(LDAP_ENDPOINT)
@@ -103,35 +105,62 @@ class AuthService():
             
             # Bind/authenticate with a user with apropriate rights to add objects
             connection.simple_bind_s(LDAP_ADMIN_DN, LDAP_ADMIN_PASSWORD)
+            logger.debug("[AuthService.registerLDAPUser] connected to LDAP server")
+
+
     
-            # The dn of our new entry/object
-            fullname = firstname + " " + lastname
-            dn="cn=" + fullname + ",dc=example,dc=com" 
+            # # The dn of our new entry/object
+            # fullname = firstname + " " + lastname
+            # dn="cn=" + fullname + ",dc=example,dc=com" 
             
-            # A dict to help build the "body" of the object
-            attrs = {}
-            attrs['objectclass'] = [ 'top', 'posixAccount', 'inetOrgPerson']
-            attrs['uid'] = username
-            attrs['cn'] = fullname
-            attrs['givenname'] = firstname
-            attrs['sn'] = lastname
-            attrs['gidNumber'] = '500'
-            attrs['userPassword'] = password
-            attrs['homeDirectory'] = "/home/users/" + username
+            # # A dict to help build the "body" of the object
+            # attrs = {}
+            # attrs['objectclass'] = [ 'top', 'posixAccount', 'inetOrgPerson']
+            # attrs['uid'] = username
+            # attrs['cn'] = fullname
+            # attrs['givenname'] = firstname
+            # attrs['sn'] = lastname
+            # attrs['gidNumber'] = '500'
+            # attrs['userPassword'] = password
+            # attrs['homeDirectory'] = "/home/users/" + username
             
-            # Convert our dict to nice syntax for the add-function using modlist-module
-            ldif = modlist.addModlist(attrs)
+            # # Convert our dict to nice syntax for the add-function using modlist-module
+            # ldif = modlist.addModlist(attrs)
             
-            # Do the actual synchronous add-operation to the ldapserver
-            connection.add_s(dn,ldif)
+            # # Do the actual synchronous add-operation to the ldapserver
+            # connection.add_s(dn,ldif)
+
+
+            entry = []
+            dn = 'cn=' + username + ',' + LDAP_USERS_DN
+            fullname = firstname + ' ' + lastname
+            home_dir = '/home/users/' + username
+
+            entry = []
+            entry.extend([
+                ('objectClass', ["inetOrgPerson".encode("utf-8"), "posixAccount".encode("utf-8"), "top".encode("utf-8")]),
+                ('uid', [username.encode("utf-8")]),
+                ('cn', [fullname.encode("utf-8")]),
+                ('givenname', [firstname.encode("utf-8")]),
+                ('sn', [lastname.encode("utf-8")]),
+                ('uidNumber', ["5".encode("utf-8")]),
+                ('gidNumber', ["500".encode("utf-8")]),
+                ('homeDirectory', [home_dir.encode("utf-8")]),
+                ('userPassword', [password.encode("utf-8")])
+            ])
+
+            logger.debug("[AuthService.registerLDAPUser] check before adding the user")
+            connection.add_s(dn, entry)
+            logger.debug("[AuthService.registerLDAPUser] check after adding the user")
             
-            # Disconnect and free resources when done
-            connection.unbind_s()
             response.setMessage("User created")
+
         except ldap.LDAPError as e:
             logger.debug("[AuthService.registerLDAPUser] Can't add LDAP user " + username)
             logger.debug(e)
             response.setMessage("Invalid inputs")
+        finally:
+            connection.unbind_s()
         return response
 
 
