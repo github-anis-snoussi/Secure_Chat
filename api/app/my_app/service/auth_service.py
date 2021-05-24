@@ -4,6 +4,7 @@ import ldap.modlist as modlist
 import time
 import datetime
 import math
+import random
 
 from flask import request, escape
 from functools import wraps
@@ -135,6 +136,7 @@ class AuthService():
             dn = 'cn=' + username + ',' + LDAP_USERS_DN
             fullname = firstname + ' ' + lastname
             home_dir = '/home/users/' + username
+            uidNumber = random.randint(1,9999)
 
             entry = []
             entry.extend([
@@ -143,7 +145,7 @@ class AuthService():
                 ('cn', [fullname.encode("utf-8")]),
                 ('givenname', [firstname.encode("utf-8")]),
                 ('sn', [lastname.encode("utf-8")]),
-                ('uidNumber', ["5".encode("utf-8")]),
+                ('uidNumber', [str(uidNumber).encode("utf-8")]),
                 ('gidNumber', ["500".encode("utf-8")]),
                 ('homeDirectory', [home_dir.encode("utf-8")]),
                 ('userPassword', [password.encode("utf-8")])
