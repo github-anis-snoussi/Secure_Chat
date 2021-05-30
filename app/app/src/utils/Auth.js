@@ -55,7 +55,11 @@ export class Auth {
                 await this.updateUserProfile()
                 this.onAuthUpdateCallback()
             }
-            Notifier.notifyFromResponse(api_auth_query, "Authentication")
+            Notifier.createNotification(
+                "success",
+                "Authentication",
+                "User created, you can login now."
+            )
         } else {
             Notifier.createNotification(
                 "error",
