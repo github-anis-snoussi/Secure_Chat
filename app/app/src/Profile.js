@@ -84,6 +84,7 @@ export class Profile extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         <tr>
                                             <td>Email address</td>
                                             <td>
@@ -96,6 +97,21 @@ export class Profile extends Component {
                                                 />
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <td>Public Key</td>
+                                            <td>
+                                                <Form.Control 
+                                                    as="textarea" rows={3}
+                                                    placeholder="Your Public Key"
+                                                    onChange={ this.onEmailChange }
+                                                    defaultValue={ this.state.profile.email }
+                                                    disabled={ this.state.disable_form }
+                                                />
+                                            </td>
+
+                                        </tr>
+
                                         <tr>
                                             <td colSpan={2}>
                                                 <Button 
