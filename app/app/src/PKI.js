@@ -84,7 +84,6 @@ export class PKI extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         <tr>
                                             <td>Email address</td>
                                             <td>
@@ -97,8 +96,7 @@ export class PKI extends Component {
                                                 />
                                             </td>
                                         </tr>
-
-                                        {/* <tr>
+                                        <tr>
                                             <td>Public Key</td>
                                             <td>
                                                 <Form.Control 
@@ -109,8 +107,7 @@ export class PKI extends Component {
                                                     disabled={ this.state.disable_form }
                                                 />
                                             </td>
-                                        </tr> */}
-
+                                        </tr>
                                         <tr>
                                             <td colSpan={2}>
                                                 <Button 

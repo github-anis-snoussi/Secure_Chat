@@ -75,68 +75,9 @@ export class Chat extends Component {
                             <Jumbotron>
                                 <h1>Chat</h1>
                             </Jumbotron>
-                            <Form>
-                                <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
 
-                                        <tr>
-                                            <td>Email address</td>
-                                            <td>
-                                                <Form.Control 
-                                                    type="email"
-                                                    placeholder="Enter email"
-                                                    onChange={ this.onEmailChange }
-                                                    defaultValue={ this.state.profile.email }
-                                                    disabled={ this.state.disable_form }
-                                                />
-                                            </td>
-                                        </tr>
-
-                                        {/* <tr>
-                                            <td>Public Key</td>
-                                            <td>
-                                                <Form.Control 
-                                                    as="textarea" rows={3}
-                                                    placeholder="Your Public Key"
-                                                    onChange={ this.onEmailChange }
-                                                    defaultValue={ this.state.profile.email }
-                                                    disabled={ this.state.disable_form }
-                                                />
-                                            </td>
-                                        </tr> */}
-
-                                        <tr>
-                                            <td colSpan={2}>
-                                                <Button 
-                                                    variant="primary" 
-                                                    type="submit"
-                                                    onClick={ this.onFormSubmitted }
-                                                    disabled={ this.state.disable_form }
-                                                >
-                                                    {
-                                                        this.state.disable_form
-                                                        ?
-                                                        <Loader
-                                                            type="TailSpin"
-                                                            color="#fff"
-                                                            height={28}
-                                                            width={28}
-                                                        />
-                                                        :
-                                                        <>Validate</>
-                                                    }
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </Form>
+                            <p>chat ...</p>
+                        
                         </Col>
                     </Row>
                 </Container>
