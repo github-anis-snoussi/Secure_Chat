@@ -142,7 +142,7 @@ export class PKI extends Component {
     }
 
     componentDidMount() {
-        document.title = "Profile - Secure Chat";
+        document.title = "PKI - Secure Chat";
     }
 
 }
