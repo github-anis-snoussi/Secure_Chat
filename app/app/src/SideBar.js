@@ -4,7 +4,7 @@ import ClickOutside from 'react-click-outsider'
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { Route } from 'react-router-dom'
 import { Auth } from './utils/Auth'
-import { Person, QuestionCircle, BoxArrowInLeft, App } from 'react-bootstrap-icons'
+import { Person, QuestionCircle, BoxArrowInLeft, App, ChatDots, Key } from 'react-bootstrap-icons'
 
 export class SideBar extends Component {
 
@@ -49,14 +49,34 @@ export class SideBar extends Component {
                                         Dashboard
                                     </NavText>
                                 </NavItem>
-                                <NavItem eventKey="about">
-                                    <NavIcon>
-                                        <QuestionCircle size={24}/>
-                                    </NavIcon>
-                                    <NavText>
-                                        About
-                                    </NavText>
-                                </NavItem>
+                                {
+                                    (this.props.authenticated)
+                                    ?
+                                        <NavItem eventKey="chat">
+                                        <NavIcon>
+                                            <ChatDots size={24}/>
+                                        </NavIcon>
+                                        <NavText>
+                                            Chat
+                                        </NavText>
+                                        </NavItem>
+                                    :
+                                        <></>
+                                }
+                                {
+                                    (this.props.authenticated)
+                                    ?
+                                        <NavItem eventKey="pki">
+                                        <NavIcon>
+                                            <Key size={24}/>
+                                        </NavIcon>
+                                        <NavText>
+                                            PKI
+                                        </NavText>
+                                        </NavItem>
+                                    :
+                                        <></>
+                                }
                                 {
                                     (this.props.authenticated)
                                     ?
@@ -81,6 +101,14 @@ export class SideBar extends Component {
                                             ? "Logout"
                                             : "Login"
                                         }
+                                    </NavText>
+                                </NavItem>
+                                <NavItem eventKey="about">
+                                    <NavIcon>
+                                        <QuestionCircle size={24}/>
+                                    </NavIcon>
+                                    <NavText>
+                                        About
                                     </NavText>
                                 </NavItem>
                             </SideNav.Nav>

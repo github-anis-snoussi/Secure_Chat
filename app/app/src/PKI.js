@@ -27,7 +27,7 @@ const Styles = styled.div`
     }
 `
 
-export class Profile extends Component {
+export class PKI extends Component {
 
     constructor(props) {
         super(props);
@@ -73,7 +73,7 @@ export class Profile extends Component {
                     <Row className="padding-bottom">
                         <Col lg={{ span: 12 }} className="center">
                             <Jumbotron>
-                                <h1>Edit your profile</h1>
+                                <h1>PKI</h1>
                             </Jumbotron>
                             <Form>
                                 <Table striped bordered hover>
@@ -150,4 +150,4 @@ export class Profile extends Component {
 
 }
 
-export default Profile;
+export default PKI;

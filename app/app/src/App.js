@@ -11,6 +11,8 @@ import { Register } from './Register'
 import { Dashboard } from './Dashboard'
 import { Profile } from './Profile'
 import { About } from './About'
+import { PKI } from './PKI'
+import { Chat } from './Chat'
 import packageJson from '../package.json'
 
 export class App extends Component {
@@ -69,6 +71,8 @@ export class App extends Component {
                             <Route path="/signup" render={ (props) => <Register {...props} authenticated={this.state.authenticated} onAuthUpdate={this.onAuthUpdate} /> } />
                             <Route path="/dashboard" render={ (props) => <Dashboard {...props} authenticated={this.state.authenticated} /> } />
                             <Route path="/profile" render={ (props) => <Profile {...props} authenticated={this.state.authenticated} /> } />
+                            <Route path="/pki" render={ (props) => <PKI {...props} authenticated={this.state.authenticated} /> } />
+                            <Route path="/chat" render={ (props) => <Chat {...props} authenticated={this.state.authenticated} /> } />
                             <Route path="/about" component={About} />
                         </Switch>
                     </Layout>
