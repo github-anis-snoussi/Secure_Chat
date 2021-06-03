@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'react-chat-elements/dist/main.css';
 import {
     ChatList,
     MessageList,
