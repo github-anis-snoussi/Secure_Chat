@@ -8,11 +8,8 @@ import {
     SideBar,
     Dropdown,
     Popup,
-    MeetingList,
 } from 'react-chat-elements';
 
-import FaSearch from 'react-icons/lib/fa/search';
-import FaComments from 'react-icons/lib/fa/comments';
 import FaClose from 'react-icons/lib/fa/close';
 import FaMenu from 'react-icons/lib/md/more-vert';
 import FaSquare from 'react-icons/lib/md/crop-square';
@@ -262,7 +259,6 @@ export class ChatApp extends Component {
             arr.push(i);
 
         var chatSource = arr.map(x => this.random('chat'));
-        var meetingSource = arr.map(x => this.random('meeting'));
 
         return (
             <div className='chat-container'>
@@ -299,43 +295,13 @@ export class ChatApp extends Component {
                                 <Button
                                     type='transparent'
                                     color='black'
-                                    text={this.state.list === 'chat' ? 'MeetingList' : 'ChatList'}
-                                    onClick={() => {
-                                        this.setState({
-                                            list: this.state.list === 'chat' ? 'meeeting' : 'chat',
-                                        });
-                                    }}/>
+                                    text={'Active Users'}
+                                />
+
                             </div>
                         }
-                        center={
-                            this.state.list === 'chat' ?
-                            <ChatList
-                                dataSource={chatSource} />
-                            :
-                            <MeetingList
-                                onMeetingClick={console.log}
-                                onShareClick={console.log}
-                                dataSource={meetingSource} />
-                        }
-                        bottom={
-                            <span>
-                                <Button
-                                    type='transparent'
-                                    color='black'
-                                    icon={{
-                                        component: <FaComments />,
-                                        size: 18
-                                    }} />
-                                <Button
-                                    type='transparent'
-                                    color='black'
-                                    icon={{
-                                        component: <FaSearch />,
-                                        size: 18
-                                    }} />
-                                <Button text="Count"></Button>
-                            </span>
-                        } />
+                        center={<ChatList dataSource={chatSource} />}
+                        />
                 </div>
                 <div
                     className='right-panel'>

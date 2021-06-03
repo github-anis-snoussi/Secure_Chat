@@ -58,7 +58,7 @@ export class Chat extends Component {
                                 <h1>Chat</h1>
                             </Jumbotron>
 
-                            <div style={{height : 600, overflow : "scroll"}} >
+                            <div style={{height : 700, overflow : "scroll"}} >
                                 <ChatApp />
                             </div>
                         
