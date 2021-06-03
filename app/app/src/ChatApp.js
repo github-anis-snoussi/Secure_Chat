@@ -6,13 +6,8 @@ import {
     Input,
     Button,
     SideBar,
-    Dropdown,
-    Popup,
 } from 'react-chat-elements';
 
-import FaClose from 'react-icons/lib/fa/close';
-import FaMenu from 'react-icons/lib/md/more-vert';
-import FaSquare from 'react-icons/lib/md/crop-square';
 
 import Identicon from 'identicon.js';
 
@@ -22,17 +17,12 @@ export class ChatApp extends Component {
         super(props);
 
         this.state = {
-            show: true,
-            list: 'chat',
             messageList: [],
         };
 
         this.addMessage = this.addMessage.bind(this);
     }
 
-    UNSAFE_componentWillMount() {
-        this.addMessage(7)
-    }
 
     getRandomColor() {
         var letters = '0123456789ABCDEF';
@@ -54,47 +44,14 @@ export class ChatApp extends Component {
         }).toString()
     }
 
-    random(type, mtype) {
-        switch (type) {
-            case 'message':
-                mtype = mtype || this.token();
-                var status = 'waiting';
-                switch (mtype) {
-                    case 0:
-                        mtype = 'photo';
-                        status = 'sent';
-                        break;
-                    case 1:
-                        mtype = 'file';
-                        status = 'sent';
-                        break;
-                    case 2:
-                        mtype = 'system';
-                        status = 'received';
-                        break;
-                    case 3:
-                        mtype = 'location';
-                        break;
-                    case 4:
-                        mtype = 'spotify';
-                        break;
-                    case 5:
-                        mtype = 'meeting';
-                        break;
-                    case 6:
-                        mtype = 'video';
-                        status = 'sent';
-                        break;
-                    case 7:
-                        mtype = 'audio';
-                        break;
-                    default:
-                        mtype = 'text';
-                        status = 'read';
-                        break;
-                }
+    random() {
 
-                return {
+        // status can be:  sent | received | read
+
+        const mtype = 'text';
+        const status = 'received';
+
+            return {
                     position: (this.token() >= 1 ? 'right' : 'left'),
                     forwarded: true,
                     replyButton: true,
@@ -143,7 +100,7 @@ export class ChatApp extends Component {
                     view: 'list',
                     title: "Lorem ipsum",
                     titleColor: this.getRandomColor(),
-                    text: mtype === 'spotify' ? 'spotify:track:0QjjaCaXE45mvhCnV3C0TA' : "Lorem ipsummmmmmmm",
+                    text: "Lorem ipsummmmmmmm",
                     data: {
                         videoURL: this.token() >= 1 ? 'https://www.w3schools.com/html/mov_bbb.mp4' : 'http://www.exit109.com/~dnn/clips/RW20seconds_1.mp4',
                         audioURL: 'https://www.w3schools.com/html/horse.mp3',
@@ -172,82 +129,13 @@ export class ChatApp extends Component {
                         console.log('onRemoveMessageClick');
                     },
                     avatar: `data:image/png;base64,${this.photo()}`,
-                };
-            case 'chat':
-                return {
-                    id: String(Math.random()),
-                    avatar: `data:image/png;base64,${this.photo()}`,
-                    avatarFlexible: true,
-                    statusColor: 'lightgreen',
-                    statusColorType: parseInt(Math.random() * 100 % 2) === 1 ? 'encircle' : undefined,
-                    alt: "Lorem ipsum",
-                    title: "Lorem ipsum",
-                    date: new Date(),
-                    subtitle: "Lorem ipseeeeeeum",
-                    unread: parseInt(Math.random() * 10 % 3),
-                    dropdownMenu: (
-                        <Dropdown
-                            animationPosition="norteast"
-                            title='Dropdown Title'
-                            buttonProps={{
-                                type: "transparent",
-                                color: "#cecece",
-                                icon: {
-                                    component: <FaMenu />,
-                                    size: 24,
-                                }
-                            }}
-                            items={[
-                                {
-                                    icon: {
-                                        component: <FaSquare />,
-                                        float: 'left',
-                                        color: 'red',
-                                        size: 22,
-                                    },
-                                    text: 'Menu Item'
-                                },
-                                {
-                                    icon: {
-                                        component: <FaSquare/>,
-                                        float: 'left',
-                                        color: 'purple',
-                                        size: 22,
-                                    },
-                                    text: 'Menu Item'
-                                },
-                                {
-                                    icon: {
-                                        component: <FaSquare/>,
-                                        float: 'left',
-                                        color: 'yellow',
-                                        size: 22,
-                                    },
-                                    text: 'Menu Item'
-                                },
-                            ]} />
-                    ),
-                };
-            case 'meeting':
-                return {
-                    id: String(Math.random()),
-                    lazyLoadingImage: `data:image/png;base64,${this.photo()}`,
-                    avatarFlexible: true,
-                    subject: "Lorem ieeeepsum",
-                    date: new Date(),
-                    avatars: Array(this.token() + 2).fill(1).map(x => ({
-                        src: `data:image/png;base64,${this.photo()}`,
-                    })),
-                    closable: true,
-                };
-            default: 
-                return null;
-        }
+            };
+
     }
 
-    addMessage(mtype) {
+    addMessage() {
         var list = this.state.messageList;
-        list.push(this.random('message', mtype));
+        list.push(this.random());
         this.setState({
             messageList: list,
         });
@@ -267,37 +155,11 @@ export class ChatApp extends Component {
                     <SideBar
                         top={
                             <div>
-                                <Popup
-                                    // show={this.state.show}
-                                    header='Lorem ipsum dolor sit amet.'
-                                    headerButtons={[{
-                                        type: 'transparent',
-                                        color: 'black',
-                                        onClick: () => {
-                                            this.setState({ show: false })
-                                        },
-                                        icon: {
-                                            component: <FaClose />,
-                                            size: 18
-                                        }
-                                    }]}
-                                    text='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem animi veniam voluptas eius!'
-                                    footerButtons={[{
-                                        color: 'white',
-                                        backgroundColor: '#ff5e3e',
-                                        text: "Vazgeç",
-                                    }, {
-                                        color: 'white',
-                                        backgroundColor: 'lightgreen',
-                                        text: "Tamam",
-                                    }]} />
-
                                 <Button
                                     type='transparent'
                                     color='black'
                                     text={'Active Users'}
                                 />
-
                             </div>
                         }
                         center={<ChatList dataSource={chatSource} />}
@@ -309,30 +171,29 @@ export class ChatApp extends Component {
                         className='message-list'
                         lockable={true}
                         downButtonBadge={10}
-                        dataSource={this.state.messageList} />
+                        dataSource={this.state.messageList} 
+                    />
 
                     <Input
-                        placeholder="Mesajınızı buraya yazınız."
+                        placeholder="Write Clear Text Message"
                         defaultValue=""
                         ref='input'
                         multiline={true}
-                        // buttonsFloat='left'
                         onKeyPress={(e) => {
                             if (e.shiftKey && e.charCode === 13) {
                                 return true;
                             }
                             if (e.charCode === 13) {
-                                this.refs.input.clear();
-                                this.addMessage();
                                 e.preventDefault();
+                                this.addMessage();
                                 return false;
                             }
                         }}
                         rightButtons={
                             <Button
-                                text='Gönder'
+                                text='Send'
                                 onClick={() => this.addMessage()} />
-                        } />
+                        }   />
                 </div>
             </div>
         );
