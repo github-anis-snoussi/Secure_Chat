@@ -4,6 +4,11 @@ import { Redirect } from 'react-router-dom'
 import { Auth } from './utils/Auth'
 import styled from 'styled-components'
 
+// the chat component 
+import ChatApp from './ChatApp';
+
+
+
 const Styles = styled.div`
     .padding-bottom {
         padding-bottom: 16px;
@@ -40,6 +45,7 @@ export class Chat extends Component {
     }
 
 
+
     render() {
         if (this.props.authenticated === false)
             return <Redirect to='/login' />
@@ -52,7 +58,9 @@ export class Chat extends Component {
                                 <h1>Chat</h1>
                             </Jumbotron>
 
-                            <p>chat ...</p>
+                            <div style={{width : 500, height : 800}} >
+                                <ChatApp />
+                            </div>
                         
                         </Col>
                     </Row>
