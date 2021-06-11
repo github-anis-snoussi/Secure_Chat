@@ -7,8 +7,8 @@ Projet Protocoles de sécurité GL4
 
 ## How to start
 I have tried sooo many variations that I have conflicts when starting docker containers, that's why I need to delete the containers and volumes each time :
-- `sudo docker rm  $(sudo docker ps -a -q)` 
-- `sudo docker volume rm $(sudo docker volume ls -q)`
+- `docker rm  $(docker ps -a -q)` 
+- `docker volume rm $(docker volume ls -q)`
 
 After that : 
 
