@@ -10,11 +10,9 @@ import datetime
 import uuid
 import subprocess
 
-class Ldap_Administration:
+class CA_admin:
     
-    logged_users = []
-    
-    def create_signed_certificate(self, username):
+    def create_certificate(self, username):
         # Generate our key
         key = rsa.generate_private_key(
         public_exponent=65537,
@@ -72,7 +70,7 @@ class Ldap_Administration:
             f.write(certificate.public_bytes(serialization.Encoding.PEM))
         return certificate.public_bytes(serialization.Encoding.PEM)
     
-    def check_user_with_certif(self, username, certif_string):
+    def verify_certificate(self, username, certif_string):
         with open('tmp/'+username+'.crt', 'wb') as f:
             f.write(certif_string)
         output = subprocess.check_output('openssl verify -CAfile ANCE_cert tmp/'+username+'.crt', shell=True)
@@ -80,10 +78,3 @@ class Ldap_Administration:
             return True
         else:
             return False
-        
-    def sign_in(username, password, certif_string):
-        if self.check_user_with_certif(username, certif_string):
-            logged_users.append(username)
-        else:
-            return 'Wrong certificate file
-        
