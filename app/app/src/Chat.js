@@ -59,7 +59,7 @@ export class Chat extends Component {
                             </Jumbotron>
 
                             <div style={{height : 700, overflow : "scroll"}} >
-                                <ChatApp />
+                                <ChatApp profile={this.profile} />
                             </div>
                         
                         </Col>
