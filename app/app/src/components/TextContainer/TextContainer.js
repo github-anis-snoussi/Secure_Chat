@@ -8,19 +8,10 @@ export const TextContainer = ({ users }) => (
   <div className='textContainer'>
     <div>
       <h1>
-        Live Chat
+        Secure Chat
         <br />
         Application
       </h1>
-      <h2>
-        This was created by
-        <br />
-        Shawn Humphreys
-        <br />
-        using React, Express,
-        <br />
-        Node, and Socket.io
-      </h2>
     </div>
     {users ? (
       <div>
