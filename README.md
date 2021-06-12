@@ -16,7 +16,7 @@ After that :
 1. Start the authentication services
 
     ```bash
-    sudo docker-compose up ldap phpldapadmin database adminer
+    docker-compose up ldap phpldapadmin database adminer
     ```
 
    - **phpLDAPAdmin** (LDAP management) will be available at `https://localhost:8081`
@@ -34,7 +34,7 @@ After that :
     We are using NGINX as a reverse proxy so we can have a unique endpoint for our app and API. Else, we would have to open two endpoints : one for the app, the other for the API.
 
     ```bash
-    sudo docker-compose up --build -d nginx
+    docker-compose up --build -d nginx
     ```
 
     > NGINX will auto restart until you have started the app and API below.
@@ -46,7 +46,7 @@ After that :
     You might wait some time before the database get updated after starting the API :
 
     ```bash
-    sudo docker-compose up --build -d api
+    docker-compose up --build -d api
     ```
 
     > For development, go to [`http://localhost:5000`](http://localhost:5000) to access the API documentation
@@ -55,7 +55,7 @@ After that :
 
     ```bash
     # Expect several minutes for first launch (npm install)
-    sudo docker-compose up --build -d app
+    docker-compose up --build -d app
     ```
 
     > :information_source: If you want to add a NPM package, just stop & re-launch `docker-compose up app`.
