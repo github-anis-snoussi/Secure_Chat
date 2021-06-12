@@ -10,6 +10,11 @@ import datetime
 import uuid
 import subprocess
 
+
+
+# AUTH_cert : authority certif
+# AUTH_key : authority key
+
 class CA_admin:
     
     def create_certificate(self, username):
@@ -48,9 +53,9 @@ class CA_admin:
         # Create the client certificate
         pem_csr = open('csr/'+username+'_request.csr','rb').read()
         csr = x509.load_pem_x509_csr(pem_csr, default_backend())
-        pem_cert = open('ANCE_cert', 'rb').read()
+        pem_cert = open('AUTH_cert', 'rb').read()
         ca = x509.load_pem_x509_certificate(pem_cert, default_backend())
-        pem_key = open('CLEF_auth','rb').read()
+        pem_key = open('AUTH_key','rb').read()
         ca_key = serialization.load_pem_private_key(pem_key, password=bytes('rootroot', 'utf-8'), backend=default_backend())
         builder = x509.CertificateBuilder()
         builder = builder.subject_name(csr.subject)
@@ -73,7 +78,7 @@ class CA_admin:
     def verify_certificate(self, username, certif_string):
         with open('tmp/'+username+'.crt', 'wb') as f:
             f.write(certif_string)
-        output = subprocess.check_output('openssl verify -CAfile ANCE_cert tmp/'+username+'.crt', shell=True)
+        output = subprocess.check_output('openssl verify -CAfile AUTH_cert tmp/'+username+'.crt', shell=True)
         if (output[-3:-1]).decode('UTF-8') == 'OK':
             return True
         else:
