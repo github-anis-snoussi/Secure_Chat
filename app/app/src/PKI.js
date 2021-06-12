@@ -38,6 +38,7 @@ export class PKI extends Component {
             "profile": this.profile,
             "email": this.profile.email
         }
+        this.generateKey = this.generateKey.bind(this)
     }
 
     onEmailChange = (event) => this.setState({ "email": event.target.value })
@@ -64,6 +65,13 @@ export class PKI extends Component {
         }
     }
 
+    generateKey() {
+        const NodeRSA = require('node-rsa');
+        const key = new NodeRSA({b: 512});
+        
+        this.setState({ "email": key.exportKey('pkcs1') })
+    }
+
     render() {
         if (this.props.authenticated === false)
             return <Redirect to='/login' />
@@ -85,25 +93,24 @@ export class PKI extends Component {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Email address</td>
                                             <td>
-                                                <Form.Control 
-                                                    type="email"
-                                                    placeholder="Enter email"
-                                                    onChange={ this.onEmailChange }
-                                                    defaultValue={ this.state.profile.email }
-                                                    disabled={ this.state.disable_form }
-                                                />
+                                                <div>Public Key</div>
+                                                <Button 
+                                                    style={{marginTop: 20}}
+                                                    variant="secondary" 
+                                                    type="submit"
+                                                    onClick={ this.generateKey }
+                                                >
+                                                    Generate
+                                                </Button>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Public Key</td>
                                             <td>
                                                 <Form.Control 
                                                     as="textarea" rows={3}
                                                     placeholder="Your Public Key"
                                                     onChange={ this.onEmailChange }
-                                                    defaultValue={ this.state.profile.email }
+                                                    value={this.state.email}
+                                                    // defaultValue={ this.state.profile.email }
                                                     disabled={ this.state.disable_form }
                                                 />
                                             </td>
@@ -126,7 +133,7 @@ export class PKI extends Component {
                                                             width={28}
                                                         />
                                                         :
-                                                        <>Validate</>
+                                                        <>Sign and Save</>
                                                     }
                                                 </Button>
                                             </td>
@@ -145,15 +152,15 @@ export class PKI extends Component {
         document.title = "PKI - Secure Chat";
 
 
-        // RSA Example
-        const NodeRSA = require('node-rsa');
-        const key = new NodeRSA({b: 512});
+        // // RSA Example
+        // const NodeRSA = require('node-rsa');
+        // const key = new NodeRSA({b: 512});
 
-        const text = 'Hello RSA!';
-        const encrypted = key.encrypt(text, 'base64');
-        console.log('encrypted: ', encrypted);
-        const decrypted = key.decrypt(encrypted, 'utf8');
-        console.log('decrypted: ', decrypted);
+        // const text = 'Hello RSA!';
+        // const encrypted = key.encrypt(text, 'base64');
+        // console.log('encrypted: ', encrypted);
+        // const decrypted = key.decrypt(encrypted, 'utf8');
+        // console.log('decrypted: ', decrypted);
     }
 
 }
