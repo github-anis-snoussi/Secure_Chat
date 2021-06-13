@@ -16,7 +16,8 @@ import subprocess
 # AUTH_key : authority key
 
 class CA_admin:
-    
+
+    @classmethod
     def create_certificate(self, username):
         # Generate our key
         key = rsa.generate_private_key(
@@ -74,7 +75,8 @@ class CA_admin:
         with open('certificates/'+username+'.crt', 'wb') as f:
             f.write(certificate.public_bytes(serialization.Encoding.PEM))
         return certificate.public_bytes(serialization.Encoding.PEM)
-    
+
+    @classmethod
     def verify_certificate(self, username, certif_string):
         with open('tmp/'+username+'.crt', 'wb') as f:
             f.write(certif_string)
@@ -83,3 +85,6 @@ class CA_admin:
             return True
         else:
             return False
+
+
+CA_admin.create_certificate("anis")
