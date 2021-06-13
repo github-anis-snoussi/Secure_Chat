@@ -6,7 +6,7 @@
     background-color: #1A1A1D;
   }
   
-  .container {
+  .Chatcontainer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

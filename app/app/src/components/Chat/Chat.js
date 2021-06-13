@@ -18,7 +18,7 @@ export const Chat = (props) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   // will use heroku link for demo
-  const ENDPOINT = 'https://react-chat-page.herokuapp.com/';
+  const ENDPOINT = 'http://localhost:5001';
 
   useEffect(() => {
     const { name, room } = props;
@@ -57,7 +57,7 @@ export const Chat = (props) => {
   return (
     <div className="outerContainer">
     <TextContainer users={users} />
-      <div className="container">
+      <div className="Chatcontainer">
           <InfoBar room={room} />
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />

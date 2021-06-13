@@ -58,8 +58,16 @@ export class Chat extends Component {
                                 <h1>Chat</h1>
                             </Jumbotron>
 
-                            <div style={{height : 700, overflow : "scroll"}} >
-                                <ChatApp profile={this.profile} />
+                            <div style={{height : 700, overflow : "scroll"}} className="chatAppContainer" >
+                                <iframe 
+                                    src={"https://react-chat-page.netlify.app/chat?name=" + this.profile.username + "&room=GL4"}
+                                    style={{width : 400 , height : 700}}    
+                                >
+
+                                </iframe>
+
+
+                                {/* <ChatApp profile={this.profile} /> */}
                             </div>
                         
                         </Col>
