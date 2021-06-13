@@ -61,3 +61,14 @@ After that :
     > :information_source: If you want to add a NPM package, just stop & re-launch `docker-compose up app`.
 
     Open the app at [`http://localhost:8080`](http://localhost:8080)
+
+## CA
+generate authority key :
+```shell
+openssl genrsa -out AUTH_key -des3 4092
+```
+
+generate the certificate for the authority
+```shell
+openssl req -new -x509 -days 3650 -key AUTH_key -out AUTH_cert
+```
