@@ -1,4 +1,4 @@
-# GL4_Secure_Chat
+# GL4_Secure_Chat (WIP)
 Projet Protocoles de sécurité GL4
 
 ## Overview
